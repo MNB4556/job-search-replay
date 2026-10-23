@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,7 +7,18 @@ name = "job-search-replay"
 version = "0.1.0"
 description = "A local-first timeline of changing job listings."
 requires-python = ">=3.11"
+license = "MIT"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+]
 dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "ruff>=0.6",
+]
 
 [project.scripts]
 job-replay = "job_replay.server:main"
@@ -17,3 +28,16 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 job_replay = ["web/*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]

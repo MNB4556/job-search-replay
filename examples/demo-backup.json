@@ -1,0 +1,82 @@
+{
+  "format": "job-search-replay",
+  "version": 1,
+  "exported_at": "2026-10-20T12:00:00+00:00",
+  "listings": [
+    {
+      "first_seen": "2026-10-02T09:15:00+00:00",
+      "snapshots": [
+        {
+          "captured_at": "2026-10-02T09:15:00+00:00",
+          "title": "Product Designer",
+          "company": "Northstar Studio",
+          "url": "https://example.com/jobs/northstar-product-designer",
+          "source": "Company careers page",
+          "location": "London · Hybrid",
+          "salary": "£48,000–£55,000",
+          "description": "Shape clear, useful experiences for tools people use every day.\n\nYou'll partner with research and engineering, prototype ideas, and help grow a thoughtful design system."
+        },
+        {
+          "captured_at": "2026-10-06T14:40:00+00:00",
+          "title": "Senior Product Designer",
+          "company": "Northstar Studio",
+          "url": "https://example.com/jobs/northstar-product-designer",
+          "source": "Company careers page",
+          "location": "London · Hybrid",
+          "salary": "£55,000–£65,000",
+          "description": "Shape clear, useful experiences for tools people use every day.\n\nYou'll partner with research and engineering, prototype ideas, and help grow a thoughtful design system.\n\nThe role now includes mentoring two designers."
+        },
+        {
+          "captured_at": "2026-10-12T10:05:00+00:00",
+          "title": "Senior Product Designer",
+          "company": "Northstar Studio",
+          "url": "https://example.com/jobs/northstar-product-designer",
+          "source": "Company careers page",
+          "location": "London · Hybrid",
+          "salary": "£58,000–£68,000",
+          "description": "Shape clear, useful experiences for tools people use every day.\n\nYou'll partner with research and engineering, prototype ideas, and help grow a thoughtful design system.\n\nThe role now includes mentoring two designers."
+        }
+      ]
+    },
+    {
+      "first_seen": "2026-10-09T08:30:00+00:00",
+      "snapshots": [
+        {
+          "captured_at": "2026-10-09T08:30:00+00:00",
+          "title": "Junior Data Analyst",
+          "company": "Fieldnote",
+          "url": "https://example.com/jobs/fieldnote-analyst",
+          "source": "Graduate careers board",
+          "location": "Remote · UK",
+          "salary": "£32,000",
+          "description": "Turn messy questions into useful answers. Work with a small product team to build clear reporting and explore customer behaviour."
+        }
+      ]
+    },
+    {
+      "first_seen": "2026-10-14T16:20:00+00:00",
+      "snapshots": [
+        {
+          "captured_at": "2026-10-14T16:20:00+00:00",
+          "title": "Software Engineer, Early Career",
+          "company": "Morrow Labs",
+          "url": "https://example.com/jobs/morrow-early-career",
+          "source": "Company careers page",
+          "location": "Manchester · Hybrid",
+          "salary": "£38,000–£44,000",
+          "description": "Build dependable software with a supportive engineering team. We value curiosity, readable code, and learning in the open."
+        },
+        {
+          "captured_at": "2026-10-18T11:10:00+00:00",
+          "title": "Software Engineer, Early Career",
+          "company": "Morrow Labs",
+          "url": "https://example.com/jobs/morrow-early-career",
+          "source": "Company careers page",
+          "location": "Manchester · Hybrid",
+          "salary": "£40,000–£46,000",
+          "description": "Build dependable software with a supportive engineering team. We value curiosity, readable code, and learning in the open.\n\nApplications close on 15 November."
+        }
+      ]
+    }
+  ]
+}
