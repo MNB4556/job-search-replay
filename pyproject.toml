@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "job-search-replay"
+version = "0.1.0"
+description = "A local-first timeline of changing job listings."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+job-replay = "job_replay.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+job_replay = ["web/*"]

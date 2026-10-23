@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Job Search Replay</title>
+  <style>
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #202a35;
+      background: #f2f4f7;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      --ink: #202a35;
+      --muted: #687585;
+      --line: #dce2e8;
+      --accent: #285d50;
+      --accent-soft: #e6f1ed;
+      --paper: #fff;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .shell { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 38px 0 26px; }
+    .eyebrow { color: var(--accent); font-size: .76rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 8px 0 6px; font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -.045em; }
+    header p { max-width: 660px; margin: 0; color: var(--muted); line-height: 1.6; }
+    main { display: grid; grid-template-columns: minmax(280px, .8fr) minmax(0, 1.4fr); gap: 20px; padding-bottom: 50px; }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; box-shadow: 0 8px 24px #25334108; }
+    h2 { margin: 0 0 16px; font-size: 1.15rem; }
+    label { display: block; margin: 14px 0 6px; font-size: .88rem; font-weight: 650; }
+    input, textarea { display: block; width: 100%; padding: 10px 12px; border: 1px solid #cbd3dc; border-radius: 8px; background: #fff; color: var(--ink); }
+    textarea { min-height: 110px; resize: vertical; line-height: 1.45; }
+    input:focus, textarea:focus, button:focus-visible, a:focus-visible { outline: 3px solid #92c3b4; outline-offset: 2px; }
+    .hint { color: var(--muted); font-size: .8rem; line-height: 1.45; }
+    .primary { margin-top: 16px; padding: 11px 15px; border: 0; border-radius: 8px; background: var(--accent); color: white; font-weight: 700; }
+    .primary:hover { background: #1f4d42; }
+    .message { min-height: 1.4em; margin: 10px 0 0; color: var(--muted); font-size: .88rem; }
+    .message.error { color: #a22f30; }
+    .listing-layout { display: grid; grid-template-columns: minmax(180px, .8fr) minmax(0, 1.2fr); gap: 20px; }
+    .listing-list { display: grid; align-content: start; gap: 8px; }
+    .listing-button { width: 100%; text-align: left; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); }
+    .listing-button:hover, .listing-button[aria-current="true"] { border-color: #83b5a5; background: var(--accent-soft); }
+    .listing-button strong, .listing-button span { display: block; }
+    .listing-button span { margin-top: 4px; color: var(--muted); font-size: .82rem; }
+    .empty { padding: 18px; border: 1px dashed var(--line); border-radius: 9px; color: var(--muted); line-height: 1.5; }
+    .detail h3 { margin: 0 0 5px; font-size: 1.3rem; }
+    .detail p { margin: 6px 0; color: var(--muted); line-height: 1.5; }
+    .detail a { color: var(--accent); overflow-wrap: anywhere; }
+    .timeline { margin: 20px 0 0; padding: 0; list-style: none; }
+    .event { position: relative; margin-left: 7px; padding: 0 0 20px 22px; border-left: 2px solid var(--line); }
+    .event:last-child { border-left-color: transparent; padding-bottom: 0; }
+    .event::before { position: absolute; top: 2px; left: -6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); content: ""; }
+    .event time { color: var(--muted); font-size: .8rem; }
+    .event h4 { margin: 4px 0; font-size: .96rem; }
+    .changes { margin: 6px 0 0; padding-left: 18px; color: var(--muted); font-size: .86rem; line-height: 1.5; }
+    .description { margin-top: 12px !important; white-space: pre-wrap; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 24px, 620px); }
+      header { padding-top: 26px; }
+      main, .listing-layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="eyebrow">Local-first · Private by default</div>
+      <h1>Job Search Replay</h1>
+      <p>Keep a record of what a job advert said when you found it. Capture it again later to see what changed.</p>
+    </header>
+    <main>
+      <section class="panel" aria-labelledby="capture-heading">
+        <h2 id="capture-heading">Capture a listing</h2>
+        <p class="hint">Paste the details you want to preserve. Capture the same URL again later to add a version to its history.</p>
+        <form id="capture-form">
+          <label for="title">Job title <span aria-hidden="true">*</span></label>
+          <input id="title" name="title" required maxlength="500">
+          <label for="company">Company <span aria-hidden="true">*</span></label>
+          <input id="company" name="company" required maxlength="500" autocomplete="organization">
+          <label for="url">Job advert URL</label>
+          <input id="url" name="url" type="url" maxlength="2000" placeholder="https://">
+          <label for="source">Where you found it</label>
+          <input id="source" name="source" maxlength="200" placeholder="Company site, job board…">
+          <label for="location">Location</label>
+          <input id="location" name="location" maxlength="500">
+          <label for="salary">Salary</label>
+          <input id="salary" name="salary" maxlength="500">
+          <label for="description">Description or notes</label>
+          <textarea id="description" name="description" maxlength="20000"></textarea>
+          <button class="primary" type="submit">Save snapshot</button>
+          <p id="form-message" class="message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="panel" aria-labelledby="history-heading">
+        <h2 id="history-heading">Your listing history</h2>
+        <div class="listing-layout">
+          <div id="listings" class="listing-list" aria-label="Tracked listings"></div>
+          <div id="detail" class="detail" aria-live="polite">
+            <div class="empty">Your captured listings and their changes will show up here.</div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const form = document.querySelector("#capture-form");
+    const listingsElement = document.querySelector("#listings");
+    const detailElement = document.querySelector("#detail");
+    const messageElement = document.querySelector("#form-message");
+    let selectedId = null;
+    let listings = [];
+
+    function element(tag, text, className) {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (className) node.className = className;
+      return node;
+    }
+
+    function formatDate(value) {
+      return new Date(value).toLocaleString([], { dateStyle: "medium", timeStyle: "short" });
+    }
+
+    async function refresh(preferredId = selectedId) {
+      const response = await fetch("/api/listings");
+      if (!response.ok) throw new Error("Could not load saved listings.");
+      listings = (await response.json()).listings;
+      listingsElement.replaceChildren();
+      if (!listings.length) {
+        listingsElement.append(element("div", "No captures yet. Add one with the form.", "empty"));
+        detailElement.replaceChildren(element("div", "Your captured listings and their changes will show up here.", "empty"));
+        selectedId = null;
+        return;
+      }
+
+      for (const listing of listings) {
+        const button = element("button", undefined, "listing-button");
+        button.type = "button";
+        button.dataset.id = String(listing.id);
+        button.setAttribute("aria-current", String(listing.id === preferredId));
+        button.append(element("strong", listing.title));
+        button.append(element("span", `${listing.company} · ${listing.snapshot_count} ${listing.snapshot_count === 1 ? "capture" : "captures"}`));
+        button.addEventListener("click", () => showListing(listing.id));
+        listingsElement.append(button);
+      }
+      const target = listings.some((listing) => listing.id === preferredId) ? preferredId : listings[0].id;
+      await showListing(target);
+    }
+
+    function showListing(id) {
+      selectedId = id;
+      for (const button of listingsElement.querySelectorAll("button")) {
+        button.setAttribute("aria-current", String(Number(button.dataset.id) === id));
+      }
+      return fetch(`/api/listings/${id}`)
+        .then(async (response) => {
+          if (!response.ok) throw new Error("Could not load this listing's history.");
+          renderDetail(await response.json());
+        })
+        .catch(showError);
+    }
+
+    function renderDetail(listing) {
+      detailElement.replaceChildren();
+      const heading = element("h3", listing.title);
+      detailElement.append(heading, element("p", listing.company));
+      const attributes = [
+        ["Location", listing.location],
+        ["Salary", listing.salary],
+        ["Source", listing.source]
+      ];
+      for (const [label, value] of attributes) {
+        if (value) detailElement.append(element("p", `${label}: ${value}`));
+      }
+      if (listing.url) {
+        const link = element("a", "Open original advert");
+        link.href = listing.url;
+        link.target = "_blank";
+        link.rel = "noreferrer";
+        detailElement.append(link);
+      }
+      const timeline = element("ol", undefined, "timeline");
+      listing.snapshots.forEach((snapshot, index) => {
+        const item = element("li", undefined, "event");
+        item.append(element("time", formatDate(snapshot.captured_at)));
+        item.append(element("h4", index === 0 ? "First captured" : "Listing updated"));
+        if (index > 0) {
+          const previous = listing.snapshots[index - 1];
+          const changes = [];
+          for (const field of ["title", "company", "location", "salary", "source", "url", "description"]) {
+            if (snapshot[field] !== previous[field]) {
+              const before = previous[field] || "empty";
+              const after = snapshot[field] || "empty";
+              changes.push(`${field}: “${before}” → “${after}”`);
+            }
+          }
+          const list = element("ul", undefined, "changes");
+          changes.forEach((change) => list.append(element("li", change)));
+          item.append(list);
+        } else if (snapshot.description) {
+          item.append(element("p", snapshot.description, "description"));
+        }
+        timeline.append(item);
+      });
+      detailElement.append(timeline);
+    }
+
+    function showError(error) {
+      messageElement.textContent = error.message;
+      messageElement.className = "message error";
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      messageElement.textContent = "";
+      messageElement.className = "message";
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        const response = await fetch("/api/snapshots", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || "Could not save this snapshot.");
+        messageElement.textContent = result.changed ? "Snapshot saved to this device." : "No changes since the previous capture.";
+        await refresh(result.listing.id);
+      } catch (error) {
+        showError(error);
+      }
+    });
+
+    refresh().catch(showError);
+  </script>
+</body>
+</html>
