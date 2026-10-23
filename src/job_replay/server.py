@@ -26,13 +26,14 @@ def make_handler(store: ReplayStore) -> type[BaseHTTPRequestHandler]:
                 web_page = Path(__file__).parent / "web" / "index.html"
                 self._send(200, web_page.read_bytes(), "text/html; charset=utf-8")
                 return
-            if path in {"/app.css", "/app.js"}:
+            if path in {"/app.css", "/app.js", "/favicon.svg"}:
                 asset = Path(__file__).parent / "web" / path.removeprefix("/")
-                content_type = (
-                    "text/css; charset=utf-8"
-                    if path.endswith(".css")
-                    else "text/javascript; charset=utf-8"
-                )
+                content_types = {
+                    "/app.css": "text/css; charset=utf-8",
+                    "/app.js": "text/javascript; charset=utf-8",
+                    "/favicon.svg": "image/svg+xml",
+                }
+                content_type = content_types[path]
                 self._send(200, asset.read_bytes(), content_type)
                 return
             if path == "/api/listings":

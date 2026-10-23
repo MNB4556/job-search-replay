@@ -45,9 +45,15 @@ class ReplayServerTests(unittest.TestCase):
         self.assertEqual(status, 200)
         self.assertTrue(content_type.startswith("text/html"))
         self.assertIn(b"Keep the story.", page)
+        self.assertIn(b"og:description", page)
         self.assertEqual(self.last_headers.get("Cache-Control"), "no-store")
         csp = self.last_headers.get("Content-Security-Policy", "")
         self.assertIn("frame-ancestors 'none'", csp)
+
+        status, content_type, favicon = self.request("GET", "/favicon.svg")
+        self.assertEqual(status, 200)
+        self.assertEqual(content_type, "image/svg+xml")
+        self.assertIn(b"<svg", favicon)
 
         status, content_type, stylesheet = self.request("GET", "/app.css")
         self.assertEqual(status, 200)

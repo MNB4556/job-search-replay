@@ -2,12 +2,20 @@
 
 **Keep the story behind a job listing.**
 
+![CI](https://github.com/MNB4556/job-search-replay/actions/workflows/ci.yml/badge.svg)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)
+![MIT license](https://img.shields.io/badge/license-MIT-1e5b49)
+
 Replay is a local-first job-search companion that saves what an advert said
 when you found it. Capture it again later and Replay shows what changed—and
 what it said before. Your search history stays on your device.
 
-> The MVP is intentionally manual: no scraping, accounts, analytics, or
-> third-party services. You decide what to save.
+![Replay showing fictional listing history and field-by-field changes](docs/replay-dashboard.png)
+
+**[Run it locally](#quick-start)** · **[Try the fictional demo](#explore-with-sample-data)** · **[Read the case study](docs/CASE_STUDY.md)**
+
+> **Local-first prototype:** manual capture, no scraping, accounts, analytics,
+> or cloud service. You choose what to save.
 
 ## What it does
 
@@ -18,6 +26,13 @@ what it said before. Your search history stays on your device.
   skipped and imports are validated before anything is written.
 - Delete a listing and its history when you no longer need it.
 - Keep all data in a local SQLite file with no runtime dependencies.
+
+## Why Replay
+
+Job links go stale, descriptions get revised, and salary ranges move. A saved
+URL alone cannot tell you what the advert said when you first found it. Replay
+keeps dated snapshots so you can return to the history, not just the current
+page.
 
 ## Quick start
 
@@ -35,9 +50,9 @@ the listing URL, salary, location, source, or description. To capture a later
 version, choose the role and press **Recapture** to copy its latest details
 into the form, make your edits, and save again.
 
-The default database is `~/.job-replay/replay.sqlite3` in your home directory.
+The database defaults to `~/.job-replay/replay.sqlite3` in your home directory.
 Set `JOB_REPLAY_DB` or pass `--database PATH` to use another path. To stop the
-app, press Ctrl+C in its terminal.
+app, press Ctrl+C.
 
 ### Other shells
 
@@ -85,8 +100,9 @@ Replay stores your data in SQLite on your computer. The app binds to
 `127.0.0.1` by default, rejects non-local Host headers, and has no login.
 **Do not expose it to your network or the public internet.** There are no
 external runtime requests; the interface uses system fonts and local assets.
-The server is a small personal-use application, not a hardened multi-user
-service.
+This is a personal-use prototype, not a hardened multi-user service. See the
+[case study](docs/CASE_STUDY.md#privacy-boundary) for the current security
+boundary and what would need to change before a hosted service.
 
 ## Development
 
@@ -104,6 +120,13 @@ HTTP API.
 
 This project is licensed under the [MIT License](./LICENSE). See the license
 file for the terms and copyright notice.
+
+## Project story
+
+Replay is a local-first prototype, not a production service. The
+[case study](docs/CASE_STUDY.md) explains the problem, product choices,
+architecture, constraints, validation, and what would be required to take it
+further.
 
 ## API
 
@@ -125,7 +148,7 @@ captures are not added to the history.
 - [x] Import discovered postings from career-ops' local SQLite database.
 - [ ] Add optional browser-assisted capture with a user-controlled preview.
 - [x] Include fictional demo data so the project can be explored quickly.
-- [ ] Add a maintained product screenshot to the README.
+- [x] Add a maintained product screenshot and project case study.
 - [ ] Improve historical comparisons for long descriptions.
 
 No listing data is sent anywhere by this MVP. Browser capture and integrations
